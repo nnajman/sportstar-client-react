@@ -1,0 +1,49 @@
+.background {
+    width: 100%;
+    height: 708px;
+}
+
+.shop-container {
+    position: absolute;
+    top: calc(50% - 90px);
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}
+
+body {
+    font-family: "Roboto";
+}
+
+.title {
+    color: black;
+    font-size: 45px;
+    font-family: "Roboto";
+    letter-spacing: 2px;
+    font-weight: 900;
+}
+
+.shop-buttons {
+    margin-top: 2%;
+}
+
+.shop-button {
+    background-color: white !important;
+    width: 160px;
+    font-family: "Roboto";
+    letter-spacing: 3px;
+    font-weight: 900;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: black;
+}
