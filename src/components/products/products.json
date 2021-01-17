@@ -1,17 +1,21 @@
 [ 
-  {"name": "adidas Originals Handball Spezial trainers in blue with gum sole",
-   "price": "315.00",
-   "imageUrl": "https://images.asos-media.com/products/adidas-running-1-4-zip-top-in-black-and-grey/21288082-1-black?$n_750w$&wid=714&fit=constrain" 
+  { "id": "1",
+    "name": "adidas Originals Handball Spezial trainers in blue with gum sole",
+    "price": "315.00",
+    "imageUrl": "https://images.asos-media.com/products/adidas-running-1-4-zip-top-in-black-and-grey/21288082-1-black?$n_750w$&wid=714&fit=constrain" 
   },
-  {"name": "New Look hoodie with applique 1998 detail",
+  { "id": "2",
+    "name": "New Look hoodie with applique 1998 detail",
     "price": "96.30",
     "imageUrl": "https://images.asos-media.com/products/new-look-hoodie-with-applique-1998-detail/21174339-1-grey?$n_750w$&wid=714&fit=constrain" 
   },
-  {"name": "Topman sweat with Los Angeles print in black",
+  { "id": "3",
+    "name": "Topman sweat with Los Angeles print in black",
     "price": "104.70",
     "imageUrl": "https://images.asos-media.com/products/topman-sweat-with-los-angeles-print-in-black/21251321-1-black?$n_750w$&wid=714&fit=constrain" 
   },
-  {"name": "Nike Jordan Jumpman large logo t-shirt in white",
+  { "id": "4",
+    "name": "Nike Jordan Jumpman large logo t-shirt in white",
     "price": "98.14",
     "imageUrl": "https://images.asos-media.com/products/nike-jordan-jumpman-large-logo-t-shirt-in-white/21094085-1-white?$n_750w$&wid=714&fit=constrain" 
   }
