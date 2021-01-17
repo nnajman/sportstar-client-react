@@ -6,7 +6,9 @@ function Categories() {
       <div>
         <img className="background" src="https://cdn.shopify.com/s/files/1/0059/0056/6597/products/photo-id-2008220827717-young-man-running-along-the-beach-in-morning_1200x800.jpg?v=1563890102" />
         <div className="products-container">
+        <div className="center">
           <h1 className="title">Categories</h1>
+        </div>
           <ul class="list-group list">
           { categories.map((item, key) =>
               <li class="list-group-item d-flex justify-content-between align-items-center" key={item.name}>{item.name}

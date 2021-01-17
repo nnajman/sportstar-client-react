@@ -5,6 +5,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Homepage from './components/home-page/home-page.js';
 import Products from './components/products/products.js';
 import Categories from './components/categories/categories.js';
+import EditProduct from './components/products/edit.js';
+import DeleteProduct from './components/products/delete.js';
+
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +17,8 @@ function App() {
         <Switch>
               <Route path="/" exact component={() => <Homepage />} />
               <Route path="/Products" component={() => <Products />} />
+              <Route path="/EditProduct" component={() => <EditProduct />} />
+              <Route path="/DeleteProduct" component={() => <DeleteProduct />} />
               <Route path="/Categories" component={() => <Categories />} />
         </Switch>  
       </div>
