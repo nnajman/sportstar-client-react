@@ -79,10 +79,10 @@ function Products() {
           { products.map((item, key) =>
               <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
-                <p>{item.name}</p>
-                <p className="bold">{item.price}</p>
-                  <button className="btn" type="button"><Link to ={'/EditProducts/' + item.id}>Edit</Link></button>
-                  <button className="btn btn-left red-btn" type="button"><Link to={'/DeleteProducts/' + item.id}>Delete</Link></button>
+                <p>{"Name: " + item.name}</p>
+                <p>{"Price: " + item.price + " ₪"}</p>
+                  <button className="btn" type="button"><Link to ={'/EditProducts/' + item._id}>Edit</Link></button>
+                  <button className="btn btn-left red-btn" type="button"><Link to={'/DeleteProducts/' + item._id}>Delete</Link></button>
                 </div>
                 <div className="image-parent">
                 <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>

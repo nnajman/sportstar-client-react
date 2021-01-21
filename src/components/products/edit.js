@@ -29,7 +29,7 @@ export default function EditProduct() {
             </div>
             <div className="col-md-8">
                 <div className="p-3 py-5">
-                <div className="d-flex justify-content-between align-items-center mb-3">
+                <div className="d-flex justify-content-between align-items-center mb-3"> 
                     <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
                     <h6 className="bold"><Link to ={'/Products'}>Back to products</Link></h6>
                     </div>
@@ -40,9 +40,9 @@ export default function EditProduct() {
                 </div>
                 <div className="row mt-3">
                     <div className="col-md-6"><input type="text" className="form-control" placeholder="Brand" defaultValue={productDetails.brand} /></div>
-                    <div className="col-md-6"><input type="text" className="form-control" defaultValue={productDetails.price} placeholder="Price" /></div>
+                    <div className="col-md-6"><input type="text" className="form-control" defaultValue={productDetails.price + " ₪"} placeholder="Price" /></div>
                 </div>
-                <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button">Save Changes</button></div>
                 </div>
             </div>
             </div>
