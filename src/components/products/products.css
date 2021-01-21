@@ -1,3 +1,5 @@
+/* product page */
+
 .resize {
     width: 80px;
     height: auto;
@@ -54,4 +56,52 @@ ul {
 
 .btn-left {
     margin-left: 5px;
+}
+
+/* edit page */
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #0062cc
+}
+
+.profile-button {
+    background: #0062cc;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #0062cc
+}
+
+.profile-button:focus {
+    background: #0062cc;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #0062cc;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #0062cc;
+    cursor: pointer
+}
+
+.width-auto {
+    width: auto !important;
+}
+
+.blue-background {
+    background-color: aliceblue;
+}
+
+.red-btn > a {
+    color: red !important;
+}
+
+.select-padding { 
+    padding-bottom: 10px;
 }

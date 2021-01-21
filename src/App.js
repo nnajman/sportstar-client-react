@@ -9,6 +9,10 @@ import EditProduct from './components/products/edit.js';
 import DeleteProduct from './components/products/delete.js';
 
 function App() {
+  
+  // Global variables
+  window.$lastGender = "men";
+
   return (
     <BrowserRouter>
       <div >
@@ -17,8 +21,8 @@ function App() {
         <Switch>
               <Route path="/" exact component={() => <Homepage />} />
               <Route path="/Products" component={() => <Products />} />
-              <Route path="/EditProduct" component={() => <EditProduct />} />
-              <Route path="/DeleteProduct" component={() => <DeleteProduct />} />
+              <Route path="/EditProducts" component={() => <EditProduct />} />
+              <Route path="/DeleteProducts" component={() => <DeleteProduct />} />
               <Route path="/Categories" component={() => <Categories />} />
         </Switch>  
       </div>
