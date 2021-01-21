@@ -75,7 +75,7 @@ function Products() {
             </select>
           </div>
 
-          <ul className="list-group list">
+          <ul className="list-group list .overflow-auto">
           { products.map((item, key) =>
               <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
