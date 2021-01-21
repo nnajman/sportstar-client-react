@@ -73,8 +73,16 @@ ul {
     border: none
 }
 
+.delete-button {
+    background: #dc3545;
+    box-shadow: none;
+    border: none;
+    color: white;
+}
+
 .profile-button:hover {
-    background: #0062cc
+    background: #0062cc;
+    color: black;
 }
 
 .profile-button:focus {

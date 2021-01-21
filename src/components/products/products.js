@@ -20,25 +20,16 @@ function Products() {
           if (gender === "women") {
             // Dresses
             setCategoryID("5ff9bab397e7c91a801e44c1");
-            // window.$categoryID = "5ff9bab397e7c91a801e44c1";
-            window.$lastGender = "women";
-            // fetch('http://localhost:8080/Products?categoryId=' + window.$categoryID)
-            // .then((response) => response.json())
-            // .then((data) => setProducts(data.products));
+            window.$lastGender = "women";          
           };
   
           if (gender === "men") {
             // Jeans
             setCategoryID("5ff9bae397e7c91a801e44c4");
-            // window.$categoryID = "5ff9bae397e7c91a801e44c4";
-            window.$lastGender = "men";
-            // fetch('http://localhost:8080/Products?categoryId=' + window.$categoryID)
-            // .then((response) => response.json())
-            // .then((data) => setProducts(data.products));
+            window.$lastGender = "men";  
           };
-        } else {
- 
-        }
+        } 
+
         fetch('http://localhost:8080/Products?categoryId=' + categoryID)
         .then((response) => response.json())
         .then((data) => setProducts(data.products));
@@ -80,9 +71,9 @@ function Products() {
               <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                 <p>{item.name}</p>
-                <p className="bold">{item.price}</p>
-                  <button className="btn" type="button"><Link to ={'/EditProducts/' + item.id}>Edit</Link></button>
-                  <button className="btn btn-left red-btn" type="button"><Link to={'/DeleteProducts/' + item.id}>Delete</Link></button>
+                <p>{"Price: " + item.price + " ₪"}</p>
+                  <button className="btn" type="button"><Link to ={'/EditProducts/' + item._id}>Edit</Link></button>
+                  <button className="btn btn-left red-btn" type="button"><Link to={'/DeleteProducts/' + item._id}>Delete</Link></button>
                 </div>
                 <div className="image-parent">
                 <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
