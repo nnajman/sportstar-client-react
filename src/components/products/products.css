@@ -7,7 +7,9 @@
 
 .list {
     width: 700px;
-    padding-top: 10px;
+    margin-top: 20px;
+    overflow-y: scroll;
+    max-height: 450px;
 }
 
 ul {
@@ -113,3 +115,4 @@ ul {
 .select-padding { 
     padding-bottom: 10px;
 }
+
