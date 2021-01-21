@@ -1,3 +1,8 @@
 .white-link {
     color: white !important;
 }
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl  {
+    width: fit-content;
+    margin-left: initial;
+}
