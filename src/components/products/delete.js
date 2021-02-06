@@ -19,12 +19,12 @@ function DeleteProduct() {
     if (productDetails === null)
         return "";
     
-        const deleteProduct = () => {  
-            let index = window.location.toString().lastIndexOf('/')+1;
-            let id = window.location.toString().substring(index);
-            fetch('http://localhost:8080/Products/'+id, {method:'delete'})
-            .then(() => history.push("/Products"));
-        }
+    const deleteProduct = () => {  
+        let index = window.location.toString().lastIndexOf('/')+1;
+        let id = window.location.toString().substring(index);
+        fetch('http://localhost:8080/Products/'+id, {method:'delete'})
+        .then(() => history.push("/Products"));
+    }
 
     return (
 

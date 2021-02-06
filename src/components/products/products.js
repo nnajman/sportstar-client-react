@@ -1,14 +1,20 @@
 import './products.css';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
+import { useRef } from 'react';
 
 function Products() {
-
+    
     const [categories, setCategories] = useState([]);
     const [gender, setGender] =  useState("men");
     // Jeans
     const [categoryID, setCategoryID] =  useState("5ff9bae397e7c91a801e44c4");
     const [products, setProducts] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
+
+    const lastGender = useRef("men");
+    // Jeans
+    const lastCategory = useRef("5ff9bae397e7c91a801e44c4");
 
     useEffect(() => {
       
@@ -16,23 +22,28 @@ function Products() {
         .then((response) => response.json())
         .then((data) => setCategories(data.categories));
 
-        if (gender !== window.$lastGender) {
+        if (gender !== lastGender.current) {
           if (gender === "women") {
             // Dresses
             setCategoryID("5ff9bab397e7c91a801e44c1");
-            window.$lastGender = "women";          
+            lastGender.current = "women";          
           };
   
           if (gender === "men") {
             // Jeans
             setCategoryID("5ff9bae397e7c91a801e44c4");
-            window.$lastGender = "men";  
+            lastGender.current = "men";  
           };
         } 
 
         fetch('http://localhost:8080/Products?categoryId=' + categoryID)
         .then((response) => response.json())
         .then((data) => setProducts(data.products));
+
+        if (gender !== lastGender.current || categoryID !== lastCategory.current) {
+          setSearchValue("");
+          lastCategory.current = categoryID;
+        }       
 
     }, [gender, categoryID]);
 
@@ -41,6 +52,14 @@ function Products() {
 
     if (products === null)
     return "";
+
+    const doSearch = (e) => {  
+
+      fetch('http://localhost:8080/Products?name=' + e.target.value + '&categoryId=' + categoryID)
+      .then((response) => response.json())
+      .then((data) => setProducts(data.products));
+      setSearchValue(e.target.value);
+  }
 
     return (
       <div>
@@ -55,7 +74,7 @@ function Products() {
               <option value="women">Women</option>
             </select>
             </div>
-
+            <div className="select-padding">
             <select className="form-select select" aria-label="Default select example"
                     onChange={ (o) => setCategoryID( o.target.value ) } value={categoryID}>
             { categories.map((item, key) =>
@@ -64,6 +83,9 @@ function Products() {
               </option>
               )}
             </select>
+            </div>
+            <input id="productsSearchBar" placeholder="Search specific product by Name or Brand" className="select" 
+                   value={searchValue} onChange={doSearch} />
           </div>
 
           <ul className="list-group list .overflow-auto">
