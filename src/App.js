@@ -20,6 +20,7 @@ function App() {
         {/* <Homepage /> */}
         <Switch>
               <Route path="/" exact component={() => <Homepage />} />
+              {/* <Route path="/Home" exact component={() => <Homepage />} /> */}
               <Route path="/Products" component={() => <Products />} />
               <Route path="/EditProducts" component={() => <EditProduct />} />
               <Route path="/DeleteProducts" component={() => <DeleteProduct />} />

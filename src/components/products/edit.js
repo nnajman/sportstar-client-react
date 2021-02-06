@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function EditProduct() {
    
     const [productDetails, setProductDetails] = useState(null);
+    const [productName, setProductName] = useState(null);
+    const [productBrand, setProductBrand] = useState(null);
+    const [productPrice, setProductPrice] = useState(null);
+    const history = useHistory();
 
     useEffect(() => {
         const index = window.location.toString().lastIndexOf('/')+1;
@@ -11,11 +16,37 @@ export default function EditProduct() {
 
         fetch('http://localhost:8080/Products/'+id)
         .then((response) => response.json())
-        .then((data) => setProductDetails(data.product));
+        .then((data) => { setProductDetails(data.product); 
+                          setProductName(data.product.name);
+                          setProductBrand(data.product.brand);
+                          setProductPrice(data.product.price); });
     }, []);
 
     if (productDetails === null)
         return "";
+
+    const editProduct = () => {
+        var EditedProduct = {
+            'name': productName,
+            'brand': productBrand,
+            'price': productPrice
+        };
+
+        let index = window.location.toString().lastIndexOf('/')+1;
+        let id = window.location.toString().substring(index);
+
+        var formBody = [];
+        for (var property in EditedProduct) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(EditedProduct[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        fetch('http://localhost:8080/Products/'+id, {headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                                                     method:'PATCH', body: formBody})
+        .then(() => history.push("/Products"));
+    }
 
     return (
         
@@ -35,14 +66,27 @@ export default function EditProduct() {
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <div className="col-md-6"><input type="text" className="form-control" placeholder="Name" defaultValue={productDetails.name} /></div>
-                    <div className="col-md-6"><input type="text" className="form-control" defaultValue={productDetails.gender} placeholder="Gender" /></div>
+                    <div className="col-md-6">
+                        <input type="text" className="form-control" placeholder="Name" defaultValue={productDetails.name} 
+                               onChange={ (e) => setProductName( e.target.value ) }/>
+                    </div>
+                    <div className="col-md-6">
+                        <input type="text" className="form-control" defaultValue={productDetails.gender} placeholder="Gender" />
+                    </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col-md-6"><input type="text" className="form-control" placeholder="Brand" defaultValue={productDetails.brand} /></div>
-                    <div className="col-md-6"><input type="text" className="form-control" defaultValue={productDetails.price + " ₪"} placeholder="Price" /></div>
+                    <div className="col-md-6">
+                        <input type="text" className="form-control" placeholder="Brand" defaultValue={productDetails.brand} 
+                               onChange={ (e) => setProductBrand( e.target.value ) }/>
+                    </div>
+                    <div className="col-md-6">
+                        <input type="text" className="form-control" defaultValue={productDetails.price} placeholder="Price ₪" 
+                               onChange={ (e) => setProductPrice( e.target.value ) }/>
+                        </div>
                 </div>
-                <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button">Save Changes</button></div>
+
+                <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
+                     onClick={editProduct}>Save Changes</button></div>
                 </div>
             </div>
             </div>
