@@ -4,3 +4,21 @@
     padding: 15px;
     margin: 0 auto;
 }
+
+.background {
+    width: 100%;
+    height: 725px;
+}
+
+.login-container {
+    position: absolute;
+    top: calc(30% - 90px);
+    left: 0;
+    right: 0;
+}
+
+.blue-background-login {
+    background-color: aliceblue;
+    width: 600px;
+    height: 400px;
+}
