@@ -1,5 +1,7 @@
 import './categories.css';
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 function Categories() {
 
     const [categories, setCategories] = useState([]);
@@ -25,13 +27,16 @@ function Categories() {
         <img className="background" src="https://cdn.shopify.com/s/files/1/0059/0056/6597/products/photo-id-2008220827717-young-man-running-along-the-beach-in-morning_1200x800.jpg?v=1563890102" alt=""/>
         <div className="products-container">
         <div className="center">
-          <div className="select-padding">
-            <h1 className="title">Categories</h1>
+        <h1 className="title">Categories</h1>
+        <div className="select-padding">
             <select className="form-select select" aria-label="Default select example"
                       onChange={ (e) => setGender( e.target.value ) }>
                 <option value="men">Men</option>
                 <option value="women">Women</option>
             </select>
+          </div>
+          <div className="select-padding">
+          <button className="addUnderTitle"><Link to ='/EditProducts'><AddIcon/>Add Category</Link></button>
           </div>
           <input id="productsSearchBar" placeholder="Search specific category" className="select" 
                    value={searchValue} onChange={doSearch} />

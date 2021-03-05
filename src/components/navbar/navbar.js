@@ -15,6 +15,9 @@ function Navbar() {
               <li className="nav-item active">
                 <Link to="/Categories" className="nav-link white-link" aria-current="page">Categories</Link>
               </li>
+              <li className="nav-item active">
+                <Link to="/Users" className="nav-link white-link" aria-current="page">Users</Link>
+              </li>
             </ul>
         </div>
       </nav>

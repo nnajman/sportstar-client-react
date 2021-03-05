@@ -1,52 +1,121 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import MuiAlert from "@material-ui/lab/Alert";
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-export default function EditProduct() {
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+export default function EditProduct(props) {
    
-    const [productDetails, setProductDetails] = useState(null);
-    const [productName, setProductName] = useState(null);
-    const [productBrand, setProductBrand] = useState(null);
-    const [productPrice, setProductPrice] = useState(null);
+    // const [productDetails, setProductDetails] = useState(null);
+    const [name, setProductName] = useState(null);
+    const [brand, setProductBrand] = useState(null);
+    const [price, setProductPrice] = useState(null);
+    const [image, setProductImage] = useState(null);
+    const [error, setError] = useState("");
+    const [stock, setStock] = useState([{
+        size: '',
+        quantity: ''
+    }]);
     const history = useHistory();
+    const productID = props.location.state.product.id;
+    var imageFile;
 
     useEffect(() => {
-        const index = window.location.toString().lastIndexOf('/')+1;
-        const id = window.location.toString().substring(index);
 
-        fetch('http://localhost:8080/Products/'+id)
+        fetch('http://localhost:8080/Products/' + productID)
         .then((response) => response.json())
-        .then((data) => { setProductDetails(data.product); 
+        .then((data) => { 
+            // setProductDetails(data.product); 
                           setProductName(data.product.name);
                           setProductBrand(data.product.brand);
-                          setProductPrice(data.product.price); });
-    }, []);
+                          setProductPrice(data.product.price);
+                          setProductImage(data.product.image);
+                          setStock(data.product.stock);});
+    }, [productID]);
 
-    if (productDetails === null)
-        return "";
-
-    const editProduct = () => {
-        var EditedProduct = {
-            'name': productName,
-            'brand': productBrand,
-            'price': productPrice
-        };
-
-        let index = window.location.toString().lastIndexOf('/')+1;
-        let id = window.location.toString().substring(index);
-
-        var formBody = [];
-        for (var property in EditedProduct) {
-          var encodedKey = encodeURIComponent(property);
-          var encodedValue = encodeURIComponent(EditedProduct[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
+    const handleSubmit = async e => {
+        if (name === "" || brand === "" || price === "" || image === "") {
+            setError("All fields required");
+            return;
+        } else {
+            e.preventDefault();
+            const message = await editProductFunc({
+                name,
+                brand,
+                price,
+                image,
+                stock
+            }, props.location.state.product.id, props.token);
+            if (message.status !== 200) {
+            setError("Authentication failed");
+            } else {
+            history.push("/Products");
+            }
         }
-        formBody = formBody.join("&");
-
-        fetch('http://localhost:8080/Products/'+id, {headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                                                     method:'PATCH', body: formBody})
-        .then(() => history.push("/Products"));
     }
+
+    const setImageFile = async e => {
+        imageFile = e.target.files[0]
+    }
+    
+    async function editProductFunc(credentials, id, token) {
+        
+        // var formBody = [];
+        var formData = new FormData();
+        const fileField = document.querySelector('input[type="file"]').files[0];
+
+        for (var property in credentials) {
+            if (property === 'image') {
+                if (fileField) {
+                    formData.append(property,fileField);
+                }
+            } else if (property === 'stock'){
+                for (let i = 0; i < stock.length; i++) {
+                    formData.append(property, JSON.stringify(stock[i]));
+                }
+            } else {
+                formData.append(property,credentials[property]);
+            }
+        }
+        return fetch('http://localhost:8080/Products/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token.token
+            }, body: formData
+            }).then((response) =>  {
+                return response;
+             });
+    
+    }    
+
+    const handleArrayChange = (event, index) => {
+        var stockTemp = [...stock];
+        stockTemp[index][event.target.name] = Number(event.target.value);
+        setStock( stockTemp )
+      }
+
+      const addActivity = (e) => {
+        // if (state.length < 3) {
+            var stockTemp = [...stock, {
+                size: '',
+                quantity: '',
+            }]
+        
+            setStock( stockTemp )
+        }
+    //   }
+      const removeElement = (e, index) => {
+        if (stock.length > 1) {
+          var stockTemp = [...stock]
+          stockTemp.splice(index, 1)
+          setStock( stockTemp )
+        }
+      }
 
     return (
         
@@ -54,8 +123,15 @@ export default function EditProduct() {
          <div className="row justify-content-center blue-background ">
             <div className="col-md-4 border-right">
                 <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <h3 className="font-weight-bold">{productDetails.name}</h3>
-                    <img className="rounded-circle mt-5" src={"http://localhost:8080/" + productDetails.image} width={160} alt=""/>
+                    <h3 className="font-weight-bold">{name}</h3>
+                    {(() => {
+                        if (image){
+                            return (
+                                <img className="rounded-circle mt-5" src={"http://localhost:8080/" + image} width={160} alt=""/>
+                            )
+                        }              
+                        return null;
+                    })()}                    
                 </div>
             </div>
             <div className="col-md-8">
@@ -66,28 +142,84 @@ export default function EditProduct() {
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <div className="col-md-6">
-                        <input type="text" className="form-control" placeholder="Name" defaultValue={productDetails.name} 
-                               onChange={ (e) => setProductName( e.target.value ) }/>
+                <div className="form-group col-md-6">
+                        <label htmlFor="Name">Name</label>
+                        {(() => {
+                        if (name){
+                            return (
+                                <input type="Name" className="form-control" placeholder="Name" value={name}
+                                onChange={ (e) => setProductName( e.target.value ) }/>                         )
+                        }              
+                        return null;
+                    })()} 
+
                     </div>
-                    <div className="col-md-6">
-                        <input type="text" className="form-control" defaultValue={productDetails.gender} placeholder="Gender" />
+                         <div className="form-group col-md-6">
+                        <label htmlFor="Brand">Brand</label>
+                        {(() => {
+                        if (brand){
+                            return (
+                                <input type="Brand" className="form-control" placeholder="Brand" value={brand}
+                                onChange={ (e) => setProductBrand( e.target.value ) }/>                               )
+                        }              
+                        return null;
+                    })()} 
+
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col-md-6">
-                        <input type="text" className="form-control" placeholder="Brand" defaultValue={productDetails.brand} 
-                               onChange={ (e) => setProductBrand( e.target.value ) }/>
+                <div className="form-group col-md-6">
+                        <label htmlFor="Price">Price in ₪</label>
+                        {(() => {
+                        if (price){
+                            return (
+                                <input type="Price" className="form-control" placeholder="Price ₪" value={price}
+                                onChange={ (e) => setProductPrice( e.target.value ) }/>                           )
+                        }              
+                        return null;
+                    })()} 
+
                     </div>
-                    <div className="col-md-6">
-                        <input type="text" className="form-control" defaultValue={productDetails.price} placeholder="Price ₪" 
-                               onChange={ (e) => setProductPrice( e.target.value ) }/>
-                        </div>
+                    <div className="form-group col-md-6">                    
+                        <label htmlFor="file">Image</label>
+                        <input type='file' className="form-control" 
+                            onChange={ (e) => setImageFile( e ) } /> 
+                    </div>
                 </div>
 
+                <ul className="list-group .overflow-auto">
+                { stock.map((obj, index) => {
+                    return (
+                        <li key={index} className="nostyle  d-flex justify-content-between align-items-center" >
+                            <div className="row mt-3">
+                                <div className="form-group col-md-5"> 
+                                    <label htmlFor="size">Size</label>
+                                    <input type="text" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                </div>
+                                <div className="form-group col-md-5"> 
+                                    <label htmlFor="quantity">Quantity</label>
+                                    <input type="text" className="form-control" name="quantity" value={obj.quantity} onChange={(e) => handleArrayChange(e, index)} />
+                                </div>
+                                <div className=""> 
+                                    <IconButton type={"button"} onClick={(e) => removeElement(e,index)} ><DeleteIcon/></IconButton>
+                                </div>
+                            </div>
+                            
+                        </li>
+                    )
+                    })}         
+                </ul>
+
+                <button type={"button"} onClick={addActivity}>Add More Activity</button>
+
                 <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
-                     onClick={editProduct}>Save Changes</button></div>
+                     onClick={handleSubmit}>Save Changes</button></div>
                 </div>
+                {error && (
+                    <Alert severity="error" onClick={() => setError(null)}>
+                         {error}
+                    </Alert>
+                 )}
             </div>
             </div>
       </div>

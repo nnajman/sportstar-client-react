@@ -2,6 +2,10 @@ import './products.css';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { useRef } from 'react';
+import { IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 function Products() {
     
@@ -84,18 +88,29 @@ function Products() {
               )}
             </select>
             </div>
-            <input id="productsSearchBar" placeholder="Search specific product by Name or Brand" className="select" 
+            <div className="select-padding">
+              <button className="addUnderTitle"><Link to={{pathname: '/AddProducts', state: {categoryID: categoryID}}}><AddIcon/>Add Product</Link></button>
+            </div>
+            <input id="productsSearchBar" placeholder="Search specific product by Name" className="select" 
                    value={searchValue} onChange={doSearch} />
           </div>
 
           <ul className="list-group list .overflow-auto">
           { products.map((item, key) =>
-              <li key={key} className="list-group-item d-flex justify-content-between align-items-center">
+              <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                 <p>{item.name}</p>
                 <p>{"Price: " + item.price + " ₪"}</p>
-                  <button className="btn" type="button"><Link to ={'/EditProducts/' + item._id}>Edit</Link></button>
-                  <button className="btn btn-left red-btn" type="button"><Link to={'/DeleteProducts/' + item._id}>Delete</Link></button>
+                  <IconButton><Link to ={{pathname: '/EditProducts', state: {
+                        product: {
+                            id: item._id
+                        }
+                    }}}><EditIcon/></Link></IconButton>
+                  <IconButton><Link to={{pathname: '/DeleteProducts', state: {
+                        product: {
+                            id: item._id
+                        }
+                    }}}><DeleteIcon/></Link></IconButton>
                 </div>
                 <div className="image-parent">
                 <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
