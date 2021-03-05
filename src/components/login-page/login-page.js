@@ -67,8 +67,7 @@ export default function LoginPage({ setToken }) {
               </label>
             </div>
             <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p className="mt-5 mb-3 text-muted">© Sport Star </p>
-
+            
             {error && (
               <Alert severity="error" onClick={() => setError(null)}>
                 {error}
