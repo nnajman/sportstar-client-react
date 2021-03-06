@@ -113,7 +113,13 @@ function Products() {
                     }}}><DeleteIcon/></Link></IconButton>
                 </div>
                 <div className="image-parent">
-                <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
+                {(() => {
+                  if ((item.image).includes("https")) {
+                    return (<img src={item.image} className="img-fluid resize" alt=""/>)
+                    } else {
+                      return (<img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>)
+                    }
+                  })()}
                 </div>                
               </li>
             )}
