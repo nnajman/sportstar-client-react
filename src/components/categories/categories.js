@@ -43,10 +43,10 @@ function Categories() {
         </div>
           <ul className="list-group list">
           { categories.map((item, key) =>
-              <li className="list-group-item d-flex justify-content-between align-items-center">{item.title}
+              <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">{item.title}
               
                 <div className="image-parent">
-                <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
+                  <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
                 </div>
                 
               </li>
