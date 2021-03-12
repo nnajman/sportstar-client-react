@@ -78,10 +78,9 @@ export default function EditProduct(props) {
                     formData.append(property,fileField);
                 }
             } else if (property === 'stock'){
-                for (let i = 0; i < stock.length; i++) {
-                    formData.append(property, JSON.stringify(stock[i]));
-                }
-            } else {
+                formData.append(property, JSON.stringify(credentials[property]));
+            }
+            else {
                 formData.append(property,credentials[property]);
             }
         }
