@@ -1,0 +1,11 @@
+.clients-number{
+    position: absolute;
+    bottom: 10px;
+    left: 40%;
+    right: 40%;
+    text-align: center;
+}
+
+.clients-number-span{
+    margin-left: 5px;
+}

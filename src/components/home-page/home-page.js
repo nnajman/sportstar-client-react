@@ -1,5 +1,6 @@
 import './home-page.css';
 import { Link } from "react-router-dom";
+import ClientsNumber from '../clients-number/clients-number';
 
 function Homepage() {
     return (
@@ -13,7 +14,9 @@ function Homepage() {
             <button className="shop-button"><Link to="/Users">Users</Link></button>
           </div>
         </div>
+        <ClientsNumber />
       </div>
+      
     )
 }
 
