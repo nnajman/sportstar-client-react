@@ -33,6 +33,10 @@ export default function DeleteUserForm(props) {
                 setFirstName(data.user.firstName);
                 setLastName(data.user.lastName);
                 setPhone(data.user.phone);
+            })
+            .catch(error => {
+              if (error.status === 404)
+                history.push("NotFound");
             });
         }
     }, [userID, token]);
@@ -40,7 +44,10 @@ export default function DeleteUserForm(props) {
     const handleSubmit = async e => {
         e.preventDefault();
         const message = await deleteUser(props.location.state.user.id, props.token);
-        if (message.status !== 200) {
+        if (message.status === 404) {
+          history.push("/NotFound");
+        }
+        else if (message.status !== 200) {
           setError("Authentication failed");
         } else {
           setSuccess("Admin User Deleted");

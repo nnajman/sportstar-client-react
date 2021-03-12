@@ -35,7 +35,8 @@ export default function EditProduct(props) {
                           setProductBrand(data.product.brand);
                           setProductPrice(data.product.price);
                           setProductImage(data.product.image);
-                          setStock(data.product.stock);});
+                          setStock(data.product.stock);})
+        .catch(error => console.log(error));
     }, [productID]);
 
     const handleSubmit = async e => {
@@ -51,10 +52,12 @@ export default function EditProduct(props) {
                 image,
                 stock
             }, props.location.state.product.id, props.token);
-            if (message.status !== 200) {
-            setError("Authentication failed");
+            if (message.status === 404) {
+                history.push("/NotFound");
+            } else if (message.status !== 200) {
+                setError("Authentication failed");
             } else {
-            history.push("/Products");
+                history.push("/Products");
             }
         }
     }
@@ -89,8 +92,11 @@ export default function EditProduct(props) {
             }, body: formData
             }).then((response) =>  {
                 return response;
-             });
-    
+             })
+            .catch(error => {
+                if (error.status === 404)
+                    history.push("/NotFound");
+            });    
     }    
 
     const handleArrayChange = (event, index) => {
