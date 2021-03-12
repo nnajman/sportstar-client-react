@@ -100,8 +100,10 @@ export default function EditProduct(props) {
 
     const handleArrayChange = (event, index) => {
         var stockTemp = [...stock];
-        stockTemp[index][event.target.name] = Number(event.target.value);
-        setStock( stockTemp )
+        if (+event.target.value > 0) {
+            stockTemp[index][event.target.name] = Number(event.target.value);
+            setStock( stockTemp);
+        } 
       }
 
       const addActivity = (e) => {
@@ -179,8 +181,11 @@ export default function EditProduct(props) {
                         if (price){
                             return (
                                 <input type="Price" className="form-control" placeholder="Price ₪" value={price}
-                                onChange={ (e) => setProductPrice( e.target.value ) }/>                           )
-                        }              
+                                onChange={ (e) => {
+                                    if (+e.target.value > 0)
+                                        setProductPrice( e.target.value);
+                                }}/>                           
+                         )  }              
                         return null;
                     })()} 
 
@@ -199,11 +204,11 @@ export default function EditProduct(props) {
                             <div className="row mt-3">
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="size">Size</label>
-                                    <input type="text" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                    <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
                                 </div>
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="quantity">Quantity</label>
-                                    <input type="text" className="form-control" name="quantity" value={obj.quantity} onChange={(e) => handleArrayChange(e, index)} />
+                                    <input type="number" className="form-control" name="quantity" value={obj.quantity} onChange={(e) => handleArrayChange(e, index)} />
                                 </div>
                                 <div className=""> 
                                     <IconButton type={"button"} onClick={(e) => removeElement(e,index)} ><DeleteIcon/></IconButton>

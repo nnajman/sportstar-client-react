@@ -5,15 +5,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton } from '@material-ui/core';
 
 export default function AddProduct(props) {
-   
+
     const [productName, setProductName] = useState(null);
     const [productBrand, setProductBrand] = useState(null);
     const [productPrice, setProductPrice] = useState(null);
     const [productImage, setProductImage] = useState(null);
     const [stock, setStock] = useState([{
-                                            size: '',
-                                            quantity: ''
-                                        }]);
+        size: '',
+        quantity: ''
+    }]);
     const history = useHistory();
 
     const newProduct = () => {
@@ -39,118 +39,125 @@ export default function AddProduct(props) {
         for (var property in NewProduct) {
             if (property === 'image') {
                 if (fileField) {
-                    formData.append(property,fileField);
+                    formData.append(property, fileField);
                 }
-            } else if (property === 'stock'){
+            } else if (property === 'stock') {
                 for (let i = 0; i < stock.length; i++) {
                     formData.append(property, JSON.stringify(stock[i]));
                 }
             } else {
-                formData.append(property,NewProduct[property]);
+                formData.append(property, NewProduct[property]);
             }
         }
 
-        fetch('http://localhost:8080/Products', 
-        {
-            headers: {'Authorization': 'Bearer ' + props.token.token},
-            method:'POST',
-            body: formData
-        })
-        .then(() => history.push("/Products"));
+        fetch('http://localhost:8080/Products',
+            {
+                headers: { 'Authorization': 'Bearer ' + props.token.token },
+                method: 'POST',
+                body: formData
+            })
+            .then(() => history.push("/Products"));
     }
 
-      const handleArrayChange = (event, index) => {
+    const handleArrayChange = (event, index) => {
         var stockTemp = [...stock];
-        stockTemp[index][event.target.name] = Number(event.target.value);
-        setStock( stockTemp )
-      }
+        if (+event.target.value > 0 && !event.target.value.includes('.')) {
+            stockTemp[index][event.target.name] = Number(event.target.value);
+            setStock( stockTemp);
+        } 
+    }
 
-      const addActivity = (e) => {
+    const addActivity = (e) => {
         // if (state.length < 3) {
-            var stockTemp = [...stock, {
-                size: '',
-                quantity: '',
-            }]
-        
-            setStock( stockTemp )
-        }
+        var stockTemp = [...stock, {
+            size: '',
+            quantity: '',
+        }]
+
+        setStock(stockTemp)
+    }
     //   }
-      const removeElement = (e, index) => {
+    const removeElement = (e, index) => {
         if (stock.length > 1) {
-          var stockTemp = [...stock]
-          stockTemp.splice(index, 1)
-          setStock( stockTemp )
+            var stockTemp = [...stock]
+            stockTemp.splice(index, 1)
+            setStock(stockTemp)
         }
-      }
+    }
 
-        return (
-        
+    return (
+
         <div className="container rounded bg-white mt-5 center width-auto">
-         <div className="row justify-content-center blue-background ">
-            <div className="col-md-8">
-                <div className="p-3 py-5">
-                <div className="d-flex justify-content-between  mb-3"> 
-                    <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
-                    <h6 className="bold"><Link to ={'/Products'}>Back to products</Link></h6>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="Name">Name</label>
-                        <input type="Name" className="form-control" placeholder="Name" 
-                               onChange={ (e) => setProductName( e.target.value ) }/>
-                    </div>
-                    <div className="form-group col-md-6">
-                        <label htmlFor="Brand">Brand</label>
-                        <input type="Brand" className="form-control" placeholder="Brand" 
-                               onChange={ (e) => setProductBrand( e.target.value ) }/>   
-                    </div>
-                </div>
-                <div className="row mt-3">
-                    <div className="form-group col-md-6">
-                        <label htmlFor="Price">Price</label>
-                        <input type="Price" className="form-control" placeholder="Price ₪" 
-                               onChange={ (e) => setProductPrice( e.target.value ) }/>
-                    </div>
-                    <div className="form-group col-md-6">                    
-                        <label htmlFor="file">Image</label>
-                        <input type='file' className="form-control" 
-                            onChange={ (e) => setProductImage( e ) } /> 
-                    </div>
-                </div>
-
-                
-                <ul className="list-group .overflow-auto">
-                { stock.map((obj, index) => {
-                    return (
-                        <li key={index} className="nostyle  d-flex justify-content-between align-items-center" >
-                            <div className="row mt-3">
-                                <div className="form-group col-md-5"> 
-                                    <label htmlFor="size">Size</label>
-                                    <input type="text" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
-                                </div>
-                                <div className="form-group col-md-5"> 
-                                    <label htmlFor="quantity">Quantity</label>
-                                    <input type="text" className="form-control" name="quantity" value={obj.quantity} onChange={(e) => handleArrayChange(e, index)} />
-                                </div>
-                                <div className=""> 
-                                    <IconButton type={"button"} onClick={(e) => removeElement(e,index)} ><DeleteIcon/></IconButton>
-                                </div>
+            <div className="row justify-content-center blue-background ">
+                <div className="col-md-8">
+                    <div className="p-3 py-5">
+                        <div className="d-flex justify-content-between  mb-3">
+                            <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
+                                <h6 className="bold"><Link to={'/Products'}>Back to products</Link></h6>
                             </div>
-                            
-                        </li>
-                    )
-                    })}         
-                </ul>
-                
-                <button type={"button"} onClick={addActivity}>Add More Activity</button>
+                        </div>
+                        <div className="row mt-2">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="Name">Name</label>
+                                <input type="Name" className="form-control" placeholder="Name"
+                                    onChange={(e) => setProductName(e.target.value)} />
+                            </div>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="Brand">Brand</label>
+                                <input type="Brand" className="form-control" placeholder="Brand"
+                                    onChange={(e) => setProductBrand(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="form-group col-md-6">
+                                <label htmlFor="Price">Price</label>
+                                <input type="number" className="form-control" placeholder="Price ₪"
+                                    onChange={(e) => {
+                                        var reg = /^\d+$/;
+                                        if (reg.test(e.target.value) || e.target.value.includes('.')) {
+                                            setProductPrice(Number(e.target.value));
+                                        }
+                                    }} />
+                            </div>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="file">Image</label>
+                                <input type='file' className="form-control"
+                                    onChange={(e) => setProductImage(e)} />
+                            </div>
+                        </div>
 
-                <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
-                     onClick={newProduct}>Create</button></div>
+
+                        <ul className="list-group .overflow-auto">
+                            {stock.map((obj, index) => {
+                                return (
+                                    <li key={index} className="nostyle  d-flex justify-content-between align-items-center" >
+                                        <div className="row mt-3">
+                                            <div className="form-group col-md-5">
+                                                <label htmlFor="size">Size</label>
+                                                <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                            </div>
+                                            <div className="form-group col-md-5">
+                                                <label htmlFor="quantity">Quantity</label>
+                                                <input type="number" className="form-control" name="quantity" value={obj.quantity} onChange={(e) => handleArrayChange(e, index)} />
+                                            </div>
+                                            <div className="">
+                                                <IconButton type={"button"} onClick={(e) => removeElement(e, index)} ><DeleteIcon /></IconButton>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                )
+                            })}
+                        </ul>
+
+                        <button type={"button"} onClick={addActivity}>Add More Activity</button>
+
+                        <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
+                            onClick={newProduct}>Create</button></div>
+                    </div>
                 </div>
             </div>
-            </div>
-      </div>
+        </div>
     )
-    
+
 }

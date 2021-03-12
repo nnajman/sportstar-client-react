@@ -99,8 +99,12 @@ export default function EditUserForm(props) {
                    value={lastName} onChange={e => setLastName(e.target.value)}/>
             <br/>
             <label htmlFor="inputPhone" className="sr-only">Phone</label>
-            <input id="inputPhone" className="form-control" placeholder="Phone" required 
-                   value={phone} onChange={e => setPhone(e.target.value)}/>
+            <input id="inputPhone" className="form-control" placeholder="Phone" required value={phone} 
+                   onChange={e => {
+                    var reg = /^\d+$/;
+                    if (reg.test(e.target.value))
+                     setPhone(e.target.value)}
+                   }/>
             <br/>
             <button className="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
             <button className="btn btn-lg btn-secondary btn-block"><Link to ={'/Users'}>Back to Users</Link></button>
