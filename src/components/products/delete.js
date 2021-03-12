@@ -16,7 +16,12 @@ export default function DeleteProduct(props) {
         fetch('http://localhost:8080/Products/'+productID)
         .then((response) => response.json())
         .then((data) => { setProductDetails(data.product);
-            setStock(data.product.stock);});
+            setStock(data.product.stock);})
+        .catch(error => {
+            if (error.status === 404)
+                history.push("NotFound");
+        });
+            
     }, [productID]);
 
     if (productDetails === null)
@@ -29,7 +34,11 @@ export default function DeleteProduct(props) {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded',
                           'Authorization': 'Bearer ' + props.token.token},
                 method:'delete'})
-            .then(() => history.push("/Products"));
+            .then(() => history.push("/Products"))
+            .catch(error => {
+                if (error.status === 404)
+                    history.push("/NotFound");
+            })
         }
     }
 
