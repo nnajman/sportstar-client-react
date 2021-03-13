@@ -204,7 +204,7 @@ export default function EditProduct(props) {
                             <div className="row mt-3">
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="size">Size</label>
-                                    <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                    <input className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
                                 </div>
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="quantity">Quantity</label>
@@ -220,7 +220,7 @@ export default function EditProduct(props) {
                     })}         
                 </ul>
 
-                <button type={"button"} onClick={addActivity}>Add More Activity</button>
+                <button type={"button"} onClick={addActivity}>Add More Size</button>
 
                 <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
                      onClick={handleSubmit}>Save Changes</button></div>
