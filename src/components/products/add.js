@@ -26,13 +26,6 @@ export default function AddProduct(props) {
             'stock': stock
         };
 
-        // var formBody = [];
-        // for (var property in NewProduct) {
-        //   var encodedKey = encodeURIComponent(property);
-        //   var encodedValue = encodeURIComponent(NewProduct[property]);
-        //   formBody.push(encodedKey + "=" + encodedValue);
-        // }
-        // formBody = formBody.join("&");
         var formData = new FormData();
         const fileField = document.querySelector('input[type="file"]').files[0];
 
