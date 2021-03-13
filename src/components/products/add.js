@@ -63,7 +63,7 @@ export default function AddProduct(props) {
             }
         }
 
-        const message = fetch('http://localhost:8080/Products',
+        fetch('http://localhost:8080/Products',
             {
                 headers: { 'Authorization': 'Bearer ' + props.token.token },
                 method: 'POST',

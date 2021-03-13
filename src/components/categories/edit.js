@@ -110,7 +110,10 @@ export default function EditCategory(props) {
                         if (title){
                             return (
                                 <input type="Title" className="form-control" placeholder="Title" value={title}
-                                onChange={ (e) => setTitle( e.target.value ) }/>                         )
+                                onChange={ (e) => {
+                                    if (e.target.value !== '')
+                                        setTitle( e.target.value ) 
+                                } }/>                         )
                         }              
                         return null;
                     })()} 
@@ -122,7 +125,10 @@ export default function EditCategory(props) {
                         if (gender){
                             return (
                                 <input type="Gender" className="form-control" placeholder="Gender" value={gender}
-                                onChange={ (e) => setGender( e.target.value ) }/>                               )
+                                onChange={ (e) => {
+                                    if (e.target.value !== '')
+                                    setGender( e.target.value ) 
+                                } }/>                               )
                         }              
                         return null;
                     })()} 
