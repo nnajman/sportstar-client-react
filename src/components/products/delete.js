@@ -29,7 +29,7 @@ export default function DeleteProduct(props) {
                 history.push("NotFound");
         });
             
-    }, [productID]);
+    }, [productID, history]);
 
     if (productDetails === null)
         return "";

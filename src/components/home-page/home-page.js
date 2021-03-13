@@ -17,8 +17,6 @@ function Homepage() {
         </div>
         <ClientsNumber />
       </div>
-
-    </div>
   )
 }
 

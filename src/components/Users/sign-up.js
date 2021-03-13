@@ -16,7 +16,7 @@ async function signUpUser(credentials, token) {
       'Authorization': 'Bearer ' + token.token
     },
     body: JSON.stringify(credentials)
-  }).then(data => data.json())
+  });
 }
 
 export default function SignUpForm(props) {

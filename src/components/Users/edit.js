@@ -38,7 +38,7 @@ export default function EditUserForm(props) {
                 history.push("NotFound");
             });
         }
-    }, [userID, token]);
+    }, [userID, token, history]);
 
     const handleSubmit = async e => {
       if (email === "" || firstName === "" || lastName === "" || phone === "") {

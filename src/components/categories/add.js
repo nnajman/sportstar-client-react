@@ -31,25 +31,24 @@ export default function AddCategory(props) {
             formData.append('image',fileField);
         }
 
-        const message = fetch('http://localhost:8080/Categories', 
+        fetch('http://localhost:8080/Categories', 
         {
             headers: {'Authorization': 'Bearer ' + props.token.token},
             method:'POST',
             body: formData
-        })
-        .then(data => data.json());
-
-        if ((message.status === 500)){ 
-            setError("Server inner problem");
-            } else if (message.status === 404) {
-            history.push("NotFound");
-            }else if (message.status !== 200) {
-            setError(message.message);
-            } else if (message.status === 200){
-            history.push("/Categories");
-            } else {
-            setError("Unknown problem");
-            }
+        }).then((response) =>  {
+            if ((response.status === 500)){ 
+                setError("Server inner problem");
+                } else if (response.status === 404) {
+                history.push("NotFound");
+                }else if (response.status !== 200) {
+                setError(response.message);
+                } else if (response.status === 200){
+                history.push("/Categories");
+                } else {
+                setError("Unknown problem");
+                }
+         });
     }
 
         return (

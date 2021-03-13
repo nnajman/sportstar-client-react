@@ -1,4 +1,3 @@
-import io from "socket.io-client";
 import './orders.css';
 import React, { useState, useEffect } from "react";
 import Moment from 'moment';
@@ -6,26 +5,18 @@ import { Accordion, Card, Button } from "react-bootstrap";
 
 function Orders(props) {
 
-    //const socket = io.connect("http://localhost:8080");
     const [orders, setOrders] = useState([]);
+    const token = props.token.token;
      
     useEffect(() => {
 
-        //TODO : listen to order event
       fetch('http://localhost:8080/Orders', {
         headers: {'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + props.token.token}})
+                  'Authorization': 'Bearer ' + token}})
       .then((response) => response.json())
       .then((data) => setOrders(data.orders.reverse()));
       
-    //   socket.on('orderAdded', ()=>{
-    //     fetch('http://localhost:8080/Orders', {
-    //     headers: {'Content-Type': 'application/json',
-    //               'Authorization': 'Bearer ' + props.token.token}})
-    //   .then((response) => response.json())
-    //   .then((data) => setOrders(data.orders.reverse()));
-    // })
-  }, []);
+  }, [token]);
 
     return (
       <div>

@@ -39,7 +39,7 @@ export default function DeleteUserForm(props) {
                 history.push("NotFound");
             });
         }
-    }, [userID, token]);
+    }, [userID, token, history]);
 
     const handleSubmit = async e => {
         e.preventDefault();

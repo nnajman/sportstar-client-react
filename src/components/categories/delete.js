@@ -24,7 +24,7 @@ export default function DeleteCategory(props) {
                 history.push("NotFound");
         });
             
-    }, [categoryID]);
+    }, [categoryID, history]);
 
     if (categoryDetails === null)
         return "";
@@ -32,22 +32,23 @@ export default function DeleteCategory(props) {
     const deleteCategory = () => {  
 
         if (props.token.token) {
-            const message = fetch('http://localhost:8080/Categories/'+categoryID, {
+            fetch('http://localhost:8080/Categories/'+categoryID, {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded',
                           'Authorization': 'Bearer ' + props.token.token},
-                method:'delete'})
-                .then(data => data.json());
-            if ((message.status === 500)){ 
-                setError("Server inner problem");
-                } else if (message.status === 404) {
-                history.push("NotFound");
-                }else if (message.status !== 200) {
-                setError(message.message);
-                } else if (message.status === 200){
-                history.push("/Categories");
-                } else {
-                setError("Unknown problem");
-                }
+                method:'delete'}).then((response) =>  {
+                    if ((response.status === 500)){ 
+                        setError("Server inner problem");
+                        } else if (response.status === 404) {
+                        history.push("NotFound");
+                        }else if (response.status !== 200) {
+                        setError(response.message);
+                        } else if (response.status === 200){
+                        history.push("/Categories");
+                        } else {
+                        setError("Unknown problem");
+                        }
+                 });
+            
         }
     }
 
