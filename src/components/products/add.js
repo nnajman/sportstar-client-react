@@ -39,6 +39,15 @@ export default function AddProduct(props) {
             return;
         }
 
+        
+
+        for (let i = 0; i < stock.length; i++) {
+            if(stock[i].size === "" || stock[i].quantity === "" || stock[i].size === null || stock[i].quantity === null){
+                setError("you didnt filled quantity or size");
+                return;
+            }
+        }
+
         var NewProduct = {
             'name': productName,
             'brand': productBrand,

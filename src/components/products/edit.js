@@ -41,6 +41,12 @@ export default function EditProduct(props) {
             setError("All fields required");
             return;
         } else {
+            for (let i = 0; i < stock.length; i++) {
+                if(stock[i].size === "" || stock[i].quantity === ""){
+                    setError("you didnt filled quantity or size");
+                    return;
+                }
+            }
             e.preventDefault();
             const message = await editProductFunc({
                 name,
