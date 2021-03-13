@@ -15,6 +15,7 @@ import UsersMain from './components/Users/users-main';
 import SignUp from './components/Users/sign-up.js';
 import EditUser from './components/Users/edit.js';
 import DeleteUser from './components/Users/delete.js';
+import Orders from './components/orders/orders.js';
 
 // import io from "socket.io-client";
 // const socket = io.connect("http://localhost:8080");
@@ -43,6 +44,7 @@ function App() {
               <Route path="/SignUp" component={() => <SignUp token={token}/>} />
               <Route path="/EditUser" component={(props) => <EditUser token={token} {...props}/>} />
               <Route path="/DeleteUser" component={(props) => <DeleteUser token={token} {...props}/>} />
+              <Route path="/Orders" component={(props) => <Orders token={token} {...props}/>} />
         </Switch>  
       </div>
     </Router>

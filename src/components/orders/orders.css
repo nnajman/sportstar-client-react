@@ -1,0 +1,7 @@
+.orders-container {
+    position: absolute;
+    top: calc(23% - 90px);
+    left: 25%;
+    right: 25%;
+    max-height: 50px;
+}

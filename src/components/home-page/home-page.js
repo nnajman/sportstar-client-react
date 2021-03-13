@@ -11,7 +11,8 @@ function Homepage() {
           <div className="shop-buttons">
             <button style={{marginRight: '3%'}} className="shop-button"><Link to="/Products">Products</Link></button>
             <button style={{marginRight: '3%'}} className="shop-button"><Link to="/Categories">Categories</Link></button>
-            <button className="shop-button"><Link to="/Users">Users</Link></button>
+            <button style={{marginRight: '3%'}} className="shop-button"><Link to="/Users">Users</Link></button>
+            <button className="shop-button"><Link to="/Orders">Orders</Link></button>
           </div>
         </div>
         <ClientsNumber />
