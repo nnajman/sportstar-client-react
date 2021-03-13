@@ -97,8 +97,13 @@ export default function EditProduct(props) {
 
     const handleArrayChange = (event, index) => {
         var stockTemp = [...stock];
-        stockTemp[index][event.target.name] = event.target.value;
-        setStock( stockTemp);
+        if (+event.target.value > 0) {
+            stockTemp[index][event.target.name] = event.target.value;
+            setStock( stockTemp);
+        }
+        if (event.target.value.includes('-')) {
+            event.target.value = '';
+        }
       }
 
       const addActivity = (e) => {
@@ -150,7 +155,10 @@ export default function EditProduct(props) {
                         if (name){
                             return (
                                 <input type="Name" className="form-control" placeholder="Name" value={name}
-                                onChange={ (e) => setProductName( e.target.value ) }/>                         )
+                                onChange={ (e) => {
+                                    if (e.target.value != '')
+                                        setProductName( e.target.value ) 
+                                }}/>                         )
                         }              
                         return null;
                     })()} 
@@ -162,7 +170,10 @@ export default function EditProduct(props) {
                         if (brand){
                             return (
                                 <input type="Brand" className="form-control" placeholder="Brand" value={brand}
-                                onChange={ (e) => setProductBrand( e.target.value ) }/>                               )
+                                onChange={ (e) => {
+                                    if (e.target.value != '')
+                                        setProductBrand( e.target.value ) 
+                                }}/>                               )
                         }              
                         return null;
                     })()} 
@@ -175,7 +186,7 @@ export default function EditProduct(props) {
                         {(() => {
                         if (price){
                             return (
-                                <input type="Price" className="form-control" placeholder="Price ₪" value={price}
+                                <input type="number" min='0' className="form-control" placeholder="Price ₪" value={price}
                                 onChange={ (e) => {
                                     if (+e.target.value > 0)
                                         setProductPrice( e.target.value);
@@ -198,7 +209,7 @@ export default function EditProduct(props) {
                             <div className="row mt-3">
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="size">Size</label>
-                                    <input className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                    <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
                                 </div>
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="quantity">Quantity</label>
