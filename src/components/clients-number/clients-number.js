@@ -13,9 +13,9 @@ function ClientsNumber() {
     })
     },[number])
     return (
-            <div class="clients-number alert alert-primary">
+            <div className="clients-number alert alert-primary">
                 current visitors number : 
-            <span class="badge badge-pill badge-light clients-number-span">{number}</span>
+            <span className="badge badge-pill badge-light clients-number-span">{number}</span>
             </div>
     );
 }
