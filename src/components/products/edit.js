@@ -11,7 +11,6 @@ function Alert(props) {
 
 export default function EditProduct(props) {
    
-    // const [productDetails, setProductDetails] = useState(null);
     const [name, setProductName] = useState(null);
     const [brand, setProductBrand] = useState(null);
     const [price, setProductPrice] = useState(null);
@@ -23,14 +22,12 @@ export default function EditProduct(props) {
     }]);
     const history = useHistory();
     const productID = props.location.state.product.id;
-    var imageFile;
 
     useEffect(() => {
 
         fetch('http://localhost:8080/Products/' + productID)
         .then((response) => response.json())
         .then((data) => { 
-            // setProductDetails(data.product); 
                           setProductName(data.product.name);
                           setProductBrand(data.product.brand);
                           setProductPrice(data.product.price);
@@ -62,28 +59,24 @@ export default function EditProduct(props) {
         }
     }
 
-    const setImageFile = async e => {
-        imageFile = e.target.files[0]
-    }
-    
     async function editProductFunc(credentials, id, token) {
         
-        // var formBody = [];
         var formData = new FormData();
         const fileField = document.querySelector('input[type="file"]').files[0];
 
         for (var property in credentials) {
-            if (property === 'image') {
-                if (fileField) {
-                    formData.append(property,fileField);
-                }
-            } else if (property === 'stock'){
+            if (property === 'stock'){
                 formData.append(property, JSON.stringify(credentials[property]));
             }
             else {
                 formData.append(property,credentials[property]);
             }
         }
+
+        if (fileField !== undefined) {
+            formData.append('image',fileField);
+        }
+
         return fetch('http://localhost:8080/Products/' + id, {
             method: 'PATCH',
             headers: {
@@ -192,8 +185,7 @@ export default function EditProduct(props) {
                     </div>
                     <div className="form-group col-md-6">                    
                         <label htmlFor="file">Image</label>
-                        <input type='file' className="form-control" 
-                            onChange={ (e) => setImageFile( e ) } /> 
+                        <input type='file' className="form-control" onChange={ (e) => setProductImage( e ) }/>
                     </div>
                 </div>
 
@@ -204,7 +196,7 @@ export default function EditProduct(props) {
                             <div className="row mt-3">
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="size">Size</label>
-                                    <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                    <input className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
                                 </div>
                                 <div className="form-group col-md-5"> 
                                     <label htmlFor="quantity">Quantity</label>
@@ -220,7 +212,7 @@ export default function EditProduct(props) {
                     })}         
                 </ul>
 
-                <button type={"button"} onClick={addActivity}>Add More Activity</button>
+                <button type={"button"} onClick={addActivity}>Add More Size</button>
 
                 <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
                      onClick={handleSubmit}>Save Changes</button></div>
