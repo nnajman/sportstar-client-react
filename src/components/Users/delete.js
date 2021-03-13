@@ -49,9 +49,9 @@ export default function DeleteUserForm(props) {
           } else if (message.status === 404) {
           history.push("NotFound");
           }else if (message.status !== 200) {
-          setError(message.message);
+          setError(message.statusText);
           } else if (message.status === 200){
-          setSuccess(message.message);
+          setSuccess(message.statusText);
           history.push("/Users");
           } else {
           setError("Unknown problem");
@@ -98,7 +98,7 @@ export default function DeleteUserForm(props) {
             <br/>
             <button className="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
             <button className="btn btn-lg btn-secondary btn-block"><Link to ={'/Users'}>Back to Users</Link></button>
-
+            <br/>
             {success && (
               <Alert severity="success" onClick={() => setSuccess(null)}>
                 {success}

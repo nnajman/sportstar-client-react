@@ -41,7 +41,7 @@ export default function DeleteCategory(props) {
                         } else if (response.status === 404) {
                         history.push("NotFound");
                         }else if (response.status !== 200) {
-                        setError(response.message);
+                        setError(response.statusText);
                         } else if (response.status === 200){
                         history.push("/Categories");
                         } else {

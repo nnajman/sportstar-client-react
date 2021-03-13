@@ -42,9 +42,9 @@ export default function AddCategory(props) {
                 } else if (response.status === 404) {
                 history.push("NotFound");
                 }else if (response.status !== 200) {
-                setError(response.message);
+                setError(response.statusText);
                 } else if (response.status === 200){
-                history.push("/Categories");
+                history.push("/Products");
                 } else {
                 setError("Unknown problem");
                 }

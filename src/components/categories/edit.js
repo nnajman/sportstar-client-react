@@ -43,7 +43,7 @@ export default function EditCategory(props) {
                 } else if (message.status === 404) {
                 history.push("NotFound");
                 }else if (message.status !== 200) {
-                setError(message.message);
+                setError(message.statusText);
                 } else if (message.status === 200){
                 history.push("/Categories");
                 } else {

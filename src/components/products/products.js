@@ -12,13 +12,13 @@ function Products() {
     const [categories, setCategories] = useState([]);
     const [gender, setGender] =  useState("men");
     // Jeans
-    const [categoryID, setCategoryID] =  useState("5ff9bae397e7c91a801e44c4");
+    const [categoryID, setCategoryID] =  useState("5ff9baf397e7c91a801e44c5");
     const [products, setProducts] = useState([]);
     const [searchValue, setSearchValue] = useState("");
 
     const lastGender = useRef("men");
     // Jeans
-    const lastCategory = useRef("5ff9bae397e7c91a801e44c4");
+    const lastCategory = useRef("5ff9baf397e7c91a801e44c5");
 
     useEffect(() => {
       
@@ -35,7 +35,7 @@ function Products() {
   
           if (gender === "men") {
             // Jeans
-            setCategoryID("5ff9bae397e7c91a801e44c4");
+            setCategoryID("5ff9baf397e7c91a801e44c5");
             lastGender.current = "men";  
           };
         } 

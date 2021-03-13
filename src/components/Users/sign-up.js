@@ -48,9 +48,9 @@ export default function SignUpForm(props) {
       } else if (message.status === 404) {
         history.push("NotFound");
       }else if (message.status !== 200) {
-        setError(message.message);
+        setError(message.statusText);
       } else if (message.status === 200){
-        setSuccess(message.message);
+        setSuccess(message.statusText);
         history.push("/Users");
       } else {
         setError("Unknown problem");
