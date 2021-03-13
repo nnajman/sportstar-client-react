@@ -91,8 +91,12 @@ function Products() {
             <div className="select-padding">
               <button className="addUnderTitle"><Link to={{pathname: '/AddProducts', state: {categoryID: categoryID}}}><AddIcon/>Add Product</Link></button>
             </div>
-            <input id="productsSearchBar" placeholder="Search specific product by Name" className="select" 
+            <div className="select-padding">
+              <input id="productsSearchBar" placeholder="Search specific product by Name" className="select" 
                    value={searchValue} onChange={doSearch} />
+            </div>
+
+              <button className="addUnderTitle"><Link to={{pathname: '/NullProducts'}}>Go to Products with null category</Link></button>
           </div>
 
           <ul className="list-group list .overflow-auto">

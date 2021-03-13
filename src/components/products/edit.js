@@ -97,10 +97,8 @@ export default function EditProduct(props) {
 
     const handleArrayChange = (event, index) => {
         var stockTemp = [...stock];
-        if (+event.target.value > 0) {
-            stockTemp[index][event.target.name] = Number(event.target.value);
-            setStock( stockTemp);
-        } 
+        stockTemp[index][event.target.name] = event.target.value;
+        setStock( stockTemp);
       }
 
       const addActivity = (e) => {

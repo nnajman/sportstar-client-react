@@ -20,6 +20,7 @@ import NotFound from './components/not-found/not-found';
 import AddCategory from './components/categories/add';
 import DeleteCategory from './components/categories/delete';
 import EditCategory from './components/categories/edit';
+import NullCategoryId from './components/products/null-categoryID';
 
 export default function App() {
   
@@ -38,6 +39,7 @@ export default function App() {
 
               {/* Products */}
               <Route path="/Products" component={() => <Products />} />
+              <Route path="/NullProducts" component={() => <NullCategoryId />} />
               <Route path="/EditProducts" component={(props) => <EditProduct token={token} {...props}/>} />
               <Route path="/DeleteProducts" component={(props) => <DeleteProduct token={token} {...props}/>} />
               <Route path="/AddProducts" component={(props) => <AddProduct token={token} {...props}/>} />
