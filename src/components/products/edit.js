@@ -186,10 +186,16 @@ export default function EditProduct(props) {
                         {(() => {
                         if (price){
                             return (
-                                <input type="number" min='0' className="form-control" placeholder="Price ₪" value={price}
-                                onChange={ (e) => {
-                                    if (+e.target.value > 0)
-                                        setProductPrice( e.target.value);
+                                <input id="price" type="number" min='0' className="form-control" placeholder="Price ₪" value={price}
+                                 onChange={ (e) => {
+                                     if (!e.keyCode && e.target.value != '') setProductPrice(e.target.value);
+
+                                    if(!((e.keyCode > 95 && e.keyCode < 106)
+                                        || (e.keyCode > 47 && e.keyCode < 58) 
+                                        || e.keyCode == 8)) {
+                                        return false;
+                                    }
+                                    setProductPrice(e.target.value);
                                 }}/>                           
                          )  }              
                         return null;
