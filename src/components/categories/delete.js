@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function DeleteCategory(props) {
 
     const history = useHistory();
     const [categoryDetails, setCategoryDetails] = useState(null);
+    const [error, setError] = useState("");
 
     const categoryID = props.location.state.category.id;
 
@@ -26,15 +32,22 @@ export default function DeleteCategory(props) {
     const deleteCategory = () => {  
 
         if (props.token.token) {
-            fetch('http://localhost:8080/Categories/'+categoryID, {
+            const message = fetch('http://localhost:8080/Categories/'+categoryID, {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded',
                           'Authorization': 'Bearer ' + props.token.token},
                 method:'delete'})
-            .then(() => history.push("/Categories"))
-            .catch(error => {
-                if (error.status === 404)
-                    history.push("/NotFound");
-            })
+                .then(data => data.json());
+            if ((message.status === 500)){ 
+                setError("Server inner problem");
+                } else if (message.status === 404) {
+                history.push("NotFound");
+                }else if (message.status !== 200) {
+                setError(message.message);
+                } else if (message.status === 200){
+                history.push("/Categories");
+                } else {
+                setError("Unknown problem");
+                }
         }
     }
 
@@ -50,23 +63,29 @@ export default function DeleteCategory(props) {
             </div>
             <div className="col-md-8">
                 <div className="p-3 py-5">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                    <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
-                    <h6 className="bold"><Link to ={'/Products'}>Back to categories</Link></h6>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
+                        <h6 className="bold"><Link to ={'/Products'}>Back to categories</Link></h6>
+                        </div>
                     </div>
-                </div>
-                <div className="row mt-2">
-                    
-                    <div className="col-md-6">
-                        <label htmlFor="Name">Title</label>
-                        <input type="Title" className="form-control" placeholder="Title" defaultValue={categoryDetails.title} disabled /></div>
-                    <div className="col-md-6">
-                        <label htmlFor="Gender">Gender</label>
-                        <input type="Gender" className="form-control" placeholder="Gender" defaultValue={categoryDetails.gender} disabled /></div>
-                </div>
-                <div className="mt-5 text-right"><button className="btn delete-button" type="button"
-                     onClick={deleteCategory}>Delete Category
-                    </button></div>
+                    <div className="row mt-2">
+                        
+                        <div className="col-md-6">
+                            <label htmlFor="Name">Title</label>
+                            <input type="Title" className="form-control" placeholder="Title" defaultValue={categoryDetails.title} disabled /></div>
+                        <div className="col-md-6">
+                            <label htmlFor="Gender">Gender</label>
+                            <input type="Gender" className="form-control" placeholder="Gender" defaultValue={categoryDetails.gender} disabled /></div>
+                    </div>
+                    <div className="mt-5 text-right"><button className="btn delete-button" type="button"
+                        onClick={deleteCategory}>Delete Category
+                        </button>
+                    </div>
+                    {error && (
+                    <Alert severity="error" onClick={() => setError(null)}>
+                         {error}
+                    </Alert>
+                 )}
                 </div>
             </div>
             </div>

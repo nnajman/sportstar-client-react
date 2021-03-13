@@ -1,10 +1,16 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function AddCategory(props) {
    
     const [title, setTitle] = useState(null);
+    const [error, setError] = useState("");
     
     const history = useHistory();
 
@@ -25,13 +31,25 @@ export default function AddCategory(props) {
             formData.append('image',fileField);
         }
 
-        fetch('http://localhost:8080/Categories', 
+        const message = fetch('http://localhost:8080/Categories', 
         {
             headers: {'Authorization': 'Bearer ' + props.token.token},
             method:'POST',
             body: formData
         })
-        .then(() => history.push("/Categories"));
+        .then(data => data.json());
+
+        if ((message.status === 500)){ 
+            setError("Server inner problem");
+            } else if (message.status === 404) {
+            history.push("NotFound");
+            }else if (message.status !== 200) {
+            setError(message.message);
+            } else if (message.status === 200){
+            history.push("/Categories");
+            } else {
+            setError("Unknown problem");
+            }
     }
 
         return (
@@ -60,6 +78,11 @@ export default function AddCategory(props) {
                 <div className="mt-5 text-right"><button className="btn btn-primary profile-button" type="button"
                      onClick={newCategory}>Create</button></div>
                 </div>
+                {error && (
+                    <Alert severity="error" onClick={() => setError(null)}>
+                         {error}
+                    </Alert>
+                 )}
             </div>
             </div>
       </div>

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function DeleteProduct(props) {
 
@@ -10,6 +15,8 @@ export default function DeleteProduct(props) {
         size: '',
         quantity: ''
     }]);
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
     const productID = props.location.state.product.id;
 
     useEffect(() => {
@@ -36,8 +43,15 @@ export default function DeleteProduct(props) {
                 method:'delete'})
             .then(() => history.push("/Products"))
             .catch(error => {
-                if (error.status === 404)
-                    history.push("/NotFound");
+                if ((error.status === 500)){ 
+                    setError("Server inner problem");
+                  } else if (error.status === 404) {
+                    history.push("NotFound");
+                  } else if (error.status !== 200) {
+                    setError(error.message);
+                  } else {
+                    setError("Unknown problem");
+                  }
             })
         }
     }
@@ -73,7 +87,8 @@ export default function DeleteProduct(props) {
                 <div className="row mt-3">
                     <div className="col-md-6">
                         <label htmlFor="Price">Price</label>
-                        <input type="Price" className="form-control" defaultValue={productDetails.price + " ₪"} placeholder="Price" disabled /></div>
+                        <input type="Price" className="form-control" defaultValue={productDetails.price + " ₪"} placeholder="Price" disabled />
+                    </div>
                 </div>
                 <ul className="list-group .overflow-auto">
                 { stock.map((obj, index) => {
@@ -98,6 +113,16 @@ export default function DeleteProduct(props) {
                      onClick={deleteProduct}>Delete Product
                     </button></div>
                 </div>
+                {success && (
+                        <Alert severity="success" onClick={() => setSuccess(null)}>
+                            {success}
+                        </Alert>
+                        )}
+                     {error && (
+                        <Alert severity="error" onClick={() => setError(null)}>
+                            {error}
+                        </Alert>
+                     )}
             </div>
             </div>
         </div>

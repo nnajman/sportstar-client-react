@@ -63,13 +63,26 @@ export default function AddProduct(props) {
             }
         }
 
-        fetch('http://localhost:8080/Products',
+        const message = fetch('http://localhost:8080/Products',
             {
                 headers: { 'Authorization': 'Bearer ' + props.token.token },
                 method: 'POST',
                 body: formData
             })
-            .then(() => history.push("/Products"));
+            .then(data => data.json());
+
+        if ((message.status === 500)){ 
+            setError("Server inner problem");
+            } else if (message.status === 404) {
+            history.push("NotFound");
+            }else if (message.status !== 200) {
+            setError(message.message);
+            } else if (message.status === 200){
+            setSuccess(message.message);
+            history.push("/Products");
+            } else {
+            setError("Unknown problem");
+            }
         
     }
 

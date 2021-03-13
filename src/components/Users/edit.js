@@ -52,13 +52,17 @@ export default function EditUserForm(props) {
           lastName,
           phone
         }, props.location.state.user.id, props.token);
-        if (message.status === 404) {
-          history.push("/NotFound");
+        if ((message.status === 500)){ 
+          setError("Server inner problem");
+        } else if (message.status === 404) {
+          history.push("NotFound");
         } else if (message.status !== 200) {
-          setError("Authentication failed");
-        } else {
-          setSuccess("Admin User Updated");
+          setError(message.message);
+        } else if (message.status === 200){
+          setSuccess(message.message);
           history.push("/Users");
+        } else {
+          setError("Unknown problem");
         }
       }
     }

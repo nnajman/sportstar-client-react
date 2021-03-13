@@ -49,13 +49,17 @@ export default function EditProduct(props) {
                 image,
                 stock
             }, props.location.state.product.id, props.token);
-            if (message.status === 404) {
-                history.push("/NotFound");
-            } else if (message.status !== 200) {
-                setError("Authentication failed");
-            } else {
+            if ((message.status === 500)){ 
+                setError("Server inner problem");
+                } else if (message.status === 404) {
+                history.push("NotFound");
+                }else if (message.status !== 200) {
+                setError(message.message);
+                } else if (message.status === 200){
                 history.push("/Products");
-            }
+                } else {
+                setError("Unknown problem");
+                }
         }
     }
 

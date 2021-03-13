@@ -43,11 +43,17 @@ export default function SignUpForm(props) {
         lastName,
         phone
       }, props.token);
-      if (message.message !== "User created") {
-        setError("Authentication failed");
-      } else {
-        setSuccess("Admin User Created");
+      if ((message.status === 500)){ 
+        setError("Server inner problem");
+      } else if (message.status === 404) {
+        history.push("NotFound");
+      }else if (message.status !== 200) {
+        setError(message.message);
+      } else if (message.status === 200){
+        setSuccess(message.message);
         history.push("/Users");
+      } else {
+        setError("Unknown problem");
       }
     }
   }

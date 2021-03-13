@@ -44,15 +44,18 @@ export default function DeleteUserForm(props) {
     const handleSubmit = async e => {
         e.preventDefault();
         const message = await deleteUser(props.location.state.user.id, props.token);
-        if (message.status === 404) {
-          history.push("/NotFound");
-        }
-        else if (message.status !== 200) {
-          setError("Authentication failed");
-        } else {
-          setSuccess("Admin User Deleted");
+        if ((message.status === 500)){ 
+          setError("Server inner problem");
+          } else if (message.status === 404) {
+          history.push("NotFound");
+          }else if (message.status !== 200) {
+          setError(message.message);
+          } else if (message.status === 200){
+          setSuccess(message.message);
           history.push("/Users");
-        }
+          } else {
+          setError("Unknown problem");
+          }
     }
 
     async function deleteUser(id, token) {
