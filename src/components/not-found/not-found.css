@@ -1,0 +1,13 @@
+.backgroundNotFound {
+    width: 100%;
+    height: 708px;
+}
+
+.not-found-container {
+    position: absolute;
+    top: calc(30% - 90px);
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+}

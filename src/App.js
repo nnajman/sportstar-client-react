@@ -16,11 +16,12 @@ import SignUp from './components/Users/sign-up.js';
 import EditUser from './components/Users/edit.js';
 import DeleteUser from './components/Users/delete.js';
 import Orders from './components/orders/orders.js';
+import NotFound from './components/not-found/not-found';
+import AddCategory from './components/categories/add';
+import DeleteCategory from './components/categories/delete';
+import EditCategory from './components/categories/edit';
 
-// import io from "socket.io-client";
-// const socket = io.connect("http://localhost:8080");
-
-function App() {
+export default function App() {
   
   const [token, setToken] = useState();
 
@@ -33,18 +34,27 @@ function App() {
       <div >
         <Navbar />
         <Switch>
-              {/* <Route path="/" exact component={() => <LoginPage />} /> */}
               <Route path="/" exact component={() => <Homepage />} />
+
+              {/* Products */}
               <Route path="/Products" component={() => <Products />} />
               <Route path="/EditProducts" component={(props) => <EditProduct token={token} {...props}/>} />
               <Route path="/DeleteProducts" component={(props) => <DeleteProduct token={token} {...props}/>} />
               <Route path="/AddProducts" component={(props) => <AddProduct token={token} {...props}/>} />
+
+              {/* Categories */}
               <Route path="/Categories" component={() => <Categories />} />
+              <Route path="/EditCategory" component={(props) => <EditCategory token={token} {...props}/>} />
+              <Route path="/DeleteCategory" component={(props) => <DeleteCategory token={token} {...props}/>} />
+              <Route path="/AddCategory" component={(props) => <AddCategory token={token} {...props}/>} />
+
+              {/* Users */}
               <Route path="/Users" component={() => <UsersMain token={token}/>} />
               <Route path="/SignUp" component={() => <SignUp token={token}/>} />
               <Route path="/EditUser" component={(props) => <EditUser token={token} {...props}/>} />
               <Route path="/DeleteUser" component={(props) => <DeleteUser token={token} {...props}/>} />
               <Route path="/Orders" component={(props) => <Orders token={token} {...props}/>} />
+              <Route path="/NotFound" component={() => <NotFound />} />
         </Switch>  
       </div>
     </Router>
@@ -52,4 +62,3 @@ function App() {
   );
 }
 
-export default App;

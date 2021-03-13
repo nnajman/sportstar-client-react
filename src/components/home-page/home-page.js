@@ -17,8 +17,9 @@ function Homepage() {
         </div>
         <ClientsNumber />
       </div>
-      
-    )
+
+    </div>
+  )
 }
 
 export default Homepage;
