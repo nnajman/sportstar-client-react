@@ -166,7 +166,7 @@ export default function AddProduct(props) {
                                         <div className="row mt-3">
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="size">Size</label>
-                                                <input type="text" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
+                                                <input type="number" className="form-control" name="size" value={obj.size} onChange={(e) => handleArrayChange(e, index)} />
                                             </div>
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="quantity">Quantity</label>
