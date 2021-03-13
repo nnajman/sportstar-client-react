@@ -2,6 +2,10 @@ import './categories.css';
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
+import { IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 function Categories() {
 
     const [categories, setCategories] = useState([]);
@@ -36,19 +40,30 @@ function Categories() {
             </select>
           </div>
           <div className="select-padding">
-          <button className="addUnderTitle"><Link to ='/EditProducts'><AddIcon/>Add Category</Link></button>
+          <button className="addUnderTitle"><Link to ={{pathname: '/AddCategory', state: {gender: gender}}}><AddIcon/>Add Category</Link></button>
           </div>
           <input id="productsSearchBar" placeholder="Search specific category" className="select" 
                    value={searchValue} onChange={doSearch} />
         </div>
           <ul className="list-group list">
           { categories.map((item, key) =>
-              <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">{item.title}
-              
+              <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                <p>{item.title}</p>
+                  <IconButton><Link to ={{pathname: '/EditCategory', state: {
+                        category: {
+                            id: item._id
+                        }
+                    }}}><EditIcon/></Link></IconButton>
+                  <IconButton><Link to={{pathname: '/DeleteCategory', state: {
+                        category: {
+                            id: item._id
+                        }
+                    }}}><DeleteIcon/></Link></IconButton>
+                </div>
                 <div className="image-parent">
                   <img src={"http://localhost:8080/" + item.image} className="img-fluid resize" alt=""/>
-                </div>
-                
+                </div>                
               </li>
             )}
           </ul>

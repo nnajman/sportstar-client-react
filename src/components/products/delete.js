@@ -58,6 +58,8 @@ export default function DeleteProduct(props) {
                     <div className="d-flex flex-row align-items-center back"><i className="fa fa-long-arrow-left mr-1 mb-1" />
                     <h6 className="bold"><Link to ={'/Products'}>Back to products</Link></h6>
                     </div>
+                    <label htmlFor="button">שים לב - מחיקת מוצר יכולה להוביל לפגיעה באמינות היסטוריית ההזמנות *</label>
+
                 </div>
                 <div className="row mt-2">
                     
