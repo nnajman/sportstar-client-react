@@ -17,74 +17,79 @@ async function signUpUser(credentials, token) {
     },
     body: JSON.stringify(credentials)
   }).then(data => data.json())
- }
+}
 
 export default function SignUpForm(props) {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [phone, setPhone] = useState();
-    const [success, setSuccess] = useState("");
-    const [error, setError] = useState("");
-    const history = useHistory();
-    
-    const handleSubmit = async e => {
-      if (email === "" || password === "") {
-        setError("Fields are required");
-        return;
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [phone, setPhone] = useState();
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const history = useHistory();
+
+  const handleSubmit = async e => {
+    if (email === "" || password === "") {
+      setError("Fields are required");
+      return;
+    } else {
+      e.preventDefault();
+      const message = await signUpUser({
+        email,
+        password,
+        firstName,
+        lastName,
+        phone
+      }, props.token);
+      if (message.message !== "User created") {
+        setError("Authentication failed");
       } else {
-        e.preventDefault();
-        const message = await signUpUser({
-          email,
-          password,
-          firstName,
-          lastName,
-          phone
-        }, props.token);
-        if (message.message !== "User created") {
-          setError("Authentication failed");
-        } else {
-          setSuccess("Admin User Created");
-          history.push("/Users");
-        }
+        setSuccess("Admin User Created");
+        history.push("/Users");
       }
     }
+  }
 
-    return (
-      <div>
-        <img className="background" src="https://wallpaperaccess.com/full/2132976.jpg" alt=""/>
-        <div className="users-container">
+  return (
+    <div>
+      <img className="background" src="https://wallpaperaccess.com/full/2132976.jpg" alt="" />
+      <div className="users-container">
         {/* blue-background-login */}
-       
-        <div className="center "> 
-        {/* <h1>Welcome to Sport Star Admin Site</h1> */}
+
+        <div className="center ">
+          {/* <h1>Welcome to Sport Star Admin Site</h1> */}
           <form className="form-signin" onSubmit={handleSubmit}>
             <h1 className="h3 mb-3 font-weight-normal">Create User</h1>
-            <br/>
+            <br />
             <label htmlFor="inputEmail" className="sr-only">Email address</label>
-            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required 
-                   onChange={e => setEmail(e.target.value)}/>
-            <br/>
+            <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required
+              onChange={e => setEmail(e.target.value)} />
+            <br />
             <label htmlFor="inputPassword" className="sr-only">Password</label>
-            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required 
-                   onChange={e => setPassword(e.target.value)}/>
-            <br/>
+            <input type="password" id="inputPassword" className="form-control" placeholder="Password" required
+              onChange={e => setPassword(e.target.value)} />
+            <br />
             <label htmlFor="inputFirstName" className="sr-only">First Name</label>
-            <input id="inputFirstName" className="form-control" placeholder="First Name" required 
-                   onChange={e => setFirstName(e.target.value)}/>
-            <br/>
+            <input id="inputFirstName" className="form-control" placeholder="First Name" required
+              onChange={e => setFirstName(e.target.value)} />
+            <br />
             <label htmlFor="inputLastName" className="sr-only">Last Name</label>
-            <input id="inputLastName" className="form-control" placeholder="Last Name" required 
-                   onChange={e => setLastName(e.target.value)}/>
-            <br/>
+            <input id="inputLastName" className="form-control" placeholder="Last Name" required
+              onChange={e => setLastName(e.target.value)} />
+            <br />
             <label htmlFor="inputPhone" className="sr-only">Phone</label>
-            <input id="inputPhone" className="form-control" placeholder="Phone" required 
-                   onChange={e => setPhone(e.target.value)}/>
-            <br/>
+            <input id="inputPhone" className="form-control" placeholder="Phone" required
+              onChange={e => {
+                var reg = /^\d+$/;
+                if (reg.test(e.target.value))
+                  setPhone(e.target.value)
+              }
+              } />
+            <br />
             <button className="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-            <button className="btn btn-lg btn-secondary btn-block"><Link to ={'/Users'}>Back to Users</Link></button>
+            <button className="btn btn-lg btn-secondary btn-block"><Link to={'/Users'}>Back to Users</Link></button>
 
             {success && (
               <Alert severity="success" onClick={() => setSuccess(null)}>
@@ -99,9 +104,9 @@ export default function SignUpForm(props) {
 
           </form>
         </div>
-        </div>
       </div>
-    )
+    </div>
+  )
 }
 
 SignUpForm.propTypes = {
