@@ -162,7 +162,7 @@ export default function EditProduct(props) {
                             return (
                                 <input type="Name" className="form-control" placeholder="Name" value={name}
                                 onChange={ (e) => {
-                                    if (e.target.value != '')
+                                    if (e.target.value !== '')
                                         setProductName( e.target.value ) 
                                 }}/>                         )
                         }              
@@ -177,7 +177,7 @@ export default function EditProduct(props) {
                             return (
                                 <input type="Brand" className="form-control" placeholder="Brand" value={brand}
                                 onChange={ (e) => {
-                                    if (e.target.value != '')
+                                    if (e.target.value !== '')
                                         setProductBrand( e.target.value ) 
                                 }}/>                               )
                         }              
